@@ -2,25 +2,43 @@
 import './login.css';
 import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
   
-    const handleLogin = (e) => {
+    const navigate = useNavigate();
+
+    const handleLogin = async(e) => {
       e.preventDefault();
-  
-      // Simple validation
+
       if (!email || !password) {
         setError("Please enter both email and password.");
         return;
       }
-  
-      // TODO: Handle authentication logic here
-      console.log("Logging in with", { email, password });
-      setError("");
-      alert("Login successful (simulated)!");
+      try{
+        setError("");
+      const res = await axios.post("/user/login",{
+       email,password
+      });
+      const userId = res.data.userId;
+      localStorage.setItem("userId", res.data.userId);
+      navigate("/testPage");
+    }catch (err) {
+      console.error("Login error:", err);
+      const message =
+        err.response?.data?.message ||
+        err.message ||
+        "Login failed.";
+    
+      setError(message);
+    }
+      
+      
     };
   
     return (
@@ -44,14 +62,7 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <button type="submit">Login</button>
-
-          <div className="divider">or</div>
-
-            <button type="button" className="google-login" >
-            <FcGoogle className="google-icon" />
-          Login with Gmail
-             </button>
+          <button type="submit" >Login</button>
           <p className="register-link">
             New here? <a href="/register">Create an account</a>
           </p>

@@ -1,0 +1,117 @@
+/* Navbar.css */
+
+.navbar {
+    background-color: #072958;
+    padding: 12px 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.07);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 50;
+  }
+  
+  .navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .navbar-center {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .hamburger {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #ffffff; /* gray-600 */
+  }
+  
+  .logo {
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff; /* gray-800 */
+  }
+  
+  .dropdown {
+    position: absolute;
+    top: 60px;
+    left: 20px;
+    background-color: #072958;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 100;
+  }
+  
+  .dropdown a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s ease;
+  }
+  
+  .dropdown a:hover {
+    color: #2563eb; /* blue-600 */
+  }
+  
+  .navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  
+  .notification {
+    position: relative;
+    background: none;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+  }
+  
+  .notif-dot {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 8px;
+    height: 8px;
+    background-color: #ef4444; /* red-500 */
+    border-radius: 9999px;
+  }
+  
+  .profile-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 9999px;
+    border: 2px solid #d1d5db;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4b5563;
+    cursor: pointer;
+  }
+
+  .search-input {
+    width: 100%;
+    max-width: 800px;
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 9999px;
+    font-size: 14px;
+    background-color: #f9fafb;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+  
+  .search-input:focus {
+    border-color: #3b82f6;
+    background-color: #ffffff;
+  }
+  

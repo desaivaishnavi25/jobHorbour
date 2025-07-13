@@ -1,18 +1,20 @@
 import React, { useState } from "react";
 import "./register.css";
 import { FcGoogle } from "react-icons/fc";
+import axios from "axios";
 
 const Register = () => {
-  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
+  const [role, setRole] = useState("");
   const [error, setError] = useState("");
 
-  const handleRegister = (e) => {
+  const handleRegister  = async (e) => {
     e.preventDefault();
 
-    if (!name || !email || !password || !confirmPass) {
+    if (!username || !email || !password || !confirmPass) {
       setError("Please fill in all fields.");
       return;
     }
@@ -21,11 +23,22 @@ const Register = () => {
       setError("Passwords do not match.");
       return;
     }
-
-    // TODO: Implement actual registration logic
-    console.log("Registering:", { name, email, password });
-    alert("Registration successful (simulated)!");
-    setError("");
+      try{
+        setError(false);
+      const res = await axios.post("/user/registration",{
+        username,email,password,role
+      });
+      res.data && window.location.replace("/login");
+    }catch (err) {
+      console.error("Registration error:", err);
+      const message =
+        err.response?.data?.message ||
+        err.message ||
+        "Registration failed.";
+    
+      setError(message);
+    }
+      
   };
 
 
@@ -39,8 +52,8 @@ const Register = () => {
         <input
           type="text"
           placeholder="Your full name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
         />
 
         <label>Email</label>
@@ -66,6 +79,32 @@ const Register = () => {
           value={confirmPass}
           onChange={(e) => setConfirmPass(e.target.value)}
         />
+
+<div className="role-selection">
+  <label>Select Role:</label>
+  <div className="role-options">
+    <label>
+      <input
+        type="radio"
+        name="role"
+        value="employer"
+        checked={role === "employer"}
+        onChange={(e) => setRole(e.target.value)}
+      />
+      Employer
+    </label>
+    <label>
+      <input
+        type="radio"
+        name="role"
+        value="employee"
+        checked={role === "employee"}
+        onChange={(e) => setRole(e.target.value)}
+      />
+      Employee
+    </label>
+  </div>
+</div>
 
         <button type="submit">Register</button>
         <p className="login-link">
