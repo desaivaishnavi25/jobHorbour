@@ -2,7 +2,7 @@ import Login from "./pages/login/login";
 import Register from "./pages/register/register";
 import Profile from "./pages/profile/profile";
 import TestPage from "./pages/testpage";
-
+import Company from "./pages/company/company";
 import {
   BrowserRouter as Router,
   Routes,
@@ -18,6 +18,7 @@ function App() {
       <Route path="/register" exact element={ <Register/>}></Route> 
       <Route path="/profile" exact element={ <Profile/>}></Route> 
       <Route path="/testPage" exact element={ <TestPage/>}></Route> 
+      <Route path="/companyProfile" exact element={ <Company/>}></Route> 
       </Routes>
       </Router>
   );

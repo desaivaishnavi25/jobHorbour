@@ -15,12 +15,12 @@ const Navbar = () => {
     }
   
     try {
-      const response = await fetch(`/user/${userId}/profile`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch profile");
-      }
-      const data = await response.json();
-      console.log("User Profile:", data);
+      // const response = await fetch(`/user/${userId}/profile`);
+      // if (!response.ok) {
+      //   throw new Error("Failed to fetch profile");
+      // }
+      // const data = await response.json();
+      // console.log("User Profile:", data);
       navigate("/profile");
 
     } catch (err) {
