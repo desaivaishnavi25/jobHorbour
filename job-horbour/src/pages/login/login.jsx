@@ -27,7 +27,7 @@ const Login = () => {
       });
       const userId = res.data.userId;
       localStorage.setItem("userId", res.data.userId);
-      navigate("/testPage");
+      navigate("/mainPage");
     }catch (err) {
       console.error("Login error:", err);
       const message =

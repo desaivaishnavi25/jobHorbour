@@ -98,6 +98,19 @@
     cursor: pointer;
   }
 
+  .add-job-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 9999px;
+    border: 2px solid #d1d5db;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4b5563;
+    cursor: pointer;
+  }
+
   .search-input {
     width: 100%;
     max-width: 800px;
@@ -115,3 +128,21 @@
     background-color: #ffffff;
   }
   
+  .hide {
+    display: none;
+  }
+
+  .notification:hover .hide {
+    display: block;
+    color: white;
+  }
+
+  .profile-btn:hover .hide {
+    display: block;
+    color: black;
+  }
+
+  .add-job-btn:hover .hide {
+    display: block;
+    color: black;
+  }

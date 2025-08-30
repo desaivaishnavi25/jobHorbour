@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './company.css';
+import { useParams } from "react-router-dom";
 
 const Company = () => {
+  const { companyId } = useParams();
+  const [isCreated, setIsCreated] = useState(false);
+  const isNew = companyId === "new";
   const [profile, setProfile] = useState({
     companyName: '',
     companyEmail: '',
@@ -10,32 +14,37 @@ const Company = () => {
     country: '',
     city: '',
     description: '',
-    foundedYear: ''
+    foundedYear: '',
+    title: ''
   });
+
 
   const userId = localStorage.getItem("userId");
   useEffect(() => {
+    if (!isNew) {
     const fetchProfile = async () => {
       try {
-        const response = await fetch(`/user/${userId}/company`);
+        const response = await fetch(`/user/company/${companyId}`);
         if (response.status === 404) {
           setIsCreated(false);
+          return;
         }
         if (!response.ok) {
           throw new Error("Failed to fetch company");
         }
-
+  
         const data = await response.json();
         setProfile(data);
-        setIsCreated(data.email !== null && data.email.trim() !== '');
+        setIsCreated(data.companyEmail !== null && data.companyEmail.trim() !== '');
       } catch (error) {
         console.error("Error fetching company:", error);
       }
     };
-    fetchProfile();
-  }, [userId]);
-
-  const [isCreated, setIsCreated] = useState(false);
+    if (companyId) {
+      fetchProfile();
+    }
+  }
+  }, [companyId,isNew]);
 
   const handleChange = (e) => {
     setProfile({ ...profile, [e.target.name]: e.target.value });
@@ -43,7 +52,7 @@ const Company = () => {
 
    const handleSubmit = async()=>{
     try{
-        const endpoint = isCreated ?  `/user/${userId}/updateCompany`:`/user/${userId}/createCompany`;
+        const endpoint = isCreated ?  `/user/updateCompany/${companyId}`:`/user/${userId}/createCompany`;
         const method = isCreated ? 'PUT' : 'POST';
         const response = await fetch(endpoint,{
           method: method,
@@ -85,7 +94,8 @@ const Company = () => {
             country: '',
             city: '',
             description: '',
-            foundedYear: ''
+            foundedYear: '',
+            title: ''
         });
         setIsCreated(false);
         alert('Profile deleted successfully!');
@@ -98,35 +108,39 @@ const Company = () => {
   
   return (
     <div className="profile-container">
-      <h2>{isCreated ? 'Update Your Profile' : 'Create Your Profile'}</h2>
+      <h2>{isCreated ? 'Update Your Job Profile' : 'Create Your Job Profile'}</h2>
       <form className="profile-form" onSubmit={(e) => e.preventDefault()}>
         <div>
-          <label>Name</label>
+          <label>Company Name</label>
           <input type="text" name="companyName" value={profile.companyName} onChange={handleChange} />
         </div>
         <div>
-          <label>Email</label>
+          <label>Title</label>
+          <input type="text" name="title" value={profile.title} onChange={handleChange} />
+        </div>
+        <div>
+          <label>Company Email</label>
           <input type="email" name="companyEmail" value={profile.companyEmail} onChange={handleChange} />
         </div>
         <div>
           <label>Contact Number</label>
-          <input type="text" name="companyContactNumber" value={profile.companyContactNumber} onChange={handleChange} />
+          <input type="number" name="companyContactNumber" value={profile.companyContactNumber} onChange={handleChange} />
         </div>
         <div>
           <label>Industry</label>
-          <input type="number" name="industry" value={profile.industry} onChange={handleChange} />
+          <input type="text" name="industry" value={profile.industry} onChange={handleChange} />
         </div>
         <div>
           <label>Country</label>
-          <textarea name="country" value={profile.country} onChange={handleChange}></textarea>
+          <input name="country" value={profile.country} onChange={handleChange}></input>
         </div>
         <div>
           <label>City</label>
           <input type="text" name="city" value={profile.city} onChange={handleChange} />
           <label>Description</label>
-          <input type="text" name="description" value={profile.description} onChange={handleChange} />
+          <textarea type="text" name="description" value={profile.description} onChange={handleChange} />
           <label>Founded Year</label>
-          <input type="text" name="foundedYear" value={profile.foundedYear} onChange={handleChange} />
+          <input type="number" name="foundedYear" value={profile.foundedYear} onChange={handleChange} />
         </div>
 
         <div className="profile-actions">
